@@ -356,6 +356,8 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	 */
 	protected @NonNull String defaultStandardLibraryURI = DEFAULT_OCL_STDLIB_URI;
 
+	static  Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap3;
+
 	protected boolean explicitDefaultStandardLibraryURI = false;
 
 	private @Nullable BagType bagType = null;
@@ -386,9 +388,9 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	private @Nullable PrimitiveType stringType = null;
 	private @Nullable CollectionType uniqueCollectionType = null;
 	private @Nullable PrimitiveType unlimitedNaturalType = null;
-	
+
 	private @Nullable Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap = null;
-	
+
 	protected /*final*/ /*@NonNull*/ CompleteModelInternal completeModel;
 	protected /*final*/ /*@NonNull*/ EnvironmentFactoryInternal environmentFactory;
 
@@ -588,6 +590,18 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		if (nameToLibraryTypeMap2 == null) {
 			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<String, org.eclipse.ocl.pivot.Class>();
 			loadDefaultLibrary(defaultStandardLibraryURI);
+			if(nameToLibraryTypeMap2.size()!=0)
+			{
+				nameToLibraryTypeMap3=nameToLibraryTypeMap2;
+			}
+			if(nameToLibraryTypeMap2.size()==0)
+			{
+				nameToLibraryTypeMap2=nameToLibraryTypeMap3;
+			}
+		}
+		if(nameToLibraryTypeMap2.size()==0)
+		{
+			nameToLibraryTypeMap2=nameToLibraryTypeMap3;
 		}
 		return nameToLibraryTypeMap2.get(typeName);
 	}
@@ -617,7 +631,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		if (instanceType instanceof PrimitiveType) {
 			return getASClass(TypeId.PRIMITIVE_TYPE_NAME);
 		}
-//		throw new UnsupportedOperationException();
+		//		throw new UnsupportedOperationException();
 		return getMetaclass(instanceType);
 	}
 
@@ -819,11 +833,11 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public org.eclipse.ocl.pivot.@NonNull Class getRequiredLibraryType(@NonNull String typeName) {
 		org.eclipse.ocl.pivot.Class type = getLibraryType(typeName);
 		if (type == null) {
-//			nameToLibraryTypeMap = null;
+			//			nameToLibraryTypeMap = null;
 			type = getLibraryType(typeName);	// FIXME just a debug retry
 			Map<String, org.eclipse.ocl.pivot.Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 			if ((nameToLibraryTypeMap2 == null) || nameToLibraryTypeMap2.isEmpty()) {
-				throw new IllegalLibraryException(PivotMessagesInternal.EmptyLibrary_ERROR_);
+				//throw new IllegalLibraryException(PivotMessagesInternal.EmptyLibrary_ERROR_);
 			}
 			else {
 				throw new IllegalLibraryException(NLS.bind(PivotMessagesInternal.MissingLibraryType_ERROR_, typeName));
@@ -888,7 +902,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 		}
 		return unlimitedNaturalType2;
 	}
-	
+
 	@Override
 	public @NonNull StandardLibraryInternal  init(@NonNull CompleteModelInternal completeModel) {
 		this.completeModel = completeModel;
@@ -900,7 +914,7 @@ public class StandardLibraryImpl extends ElementImpl implements StandardLibrary,
 	public boolean isExplicitDefaultStandardLibraryURI() {
 		return explicitDefaultStandardLibraryURI;
 	}
-	
+
 	public boolean isOrdered(Type sourceType) {
 		if (sourceType instanceof OrderedSetType) {
 			return true;

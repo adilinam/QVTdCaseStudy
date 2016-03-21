@@ -15,6 +15,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 
 /**
  */
@@ -37,6 +39,9 @@ public interface LibraryOperation extends LibraryFeature
 		 * makes its internal evaluate signature available for use after a type test and cast.
 		 */
 		@Nullable Object dispatch(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue);
+
+		Object dispatchtoEvaluate(@NonNull Executor context,
+				@NonNull OperationCallExp operationCallExp, Object sourceValue, BasicEvaluationVisitor basicEvaluationVisitor);
 	}
 	
 	/** @deprecated use Executor */

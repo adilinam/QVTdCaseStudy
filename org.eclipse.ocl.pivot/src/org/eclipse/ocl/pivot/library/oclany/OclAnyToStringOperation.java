@@ -12,6 +12,9 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationVisitor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -28,5 +31,14 @@ public class OclAnyToStringOperation extends AbstractSimpleUnaryOperation
 			throw (InvalidValueException)sourceVal;
 		}
 		return sourceVal != null ? oclToString(sourceVal) : NULL_STRING;
+	}
+
+	@Override
+	public Object dispatchtoEvaluate(@NonNull Executor context,
+			@NonNull OperationCallExp operationCallExp, Object sourceVal,
+			BasicEvaluationVisitor basicEvaluationVisitor) {
+		// TODO Auto-generated method stub
+//		super.dispatch(context, operationCallExp, sourceValue);
+		return  sourceVal != null ? oclToString(sourceVal) : NULL_STRING;
 	}
 }

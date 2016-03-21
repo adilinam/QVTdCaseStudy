@@ -19,6 +19,7 @@ import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationVisitor;
 
 /**
  * AbstractSimpleBinaryOperation defines the default implementation of a binary operation redirecting the
@@ -41,6 +42,15 @@ public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinar
 		assert argument0 != null;
 		Object firstArgument = executor.evaluate(argument0);
 		return evaluate(sourceValue, firstArgument);
+	}
+	@Nullable
+	public Object dispatchtoEvaluate(@NonNull Executor executor, @NonNull OperationCallExp callExp, @Nullable Object sourceValue, BasicEvaluationVisitor Bev) {
+		List<? extends OCLExpression> arguments = callExp.getOwnedArguments();
+		OCLExpression argument0 = arguments.get(0);
+		assert argument0 != null;
+		Object firstArgument=argument0.accept(Bev); //=;//argument0.accept();
+		return evaluate(sourceValue, firstArgument);
+		//return argument0;
 	}
 
 	/** @deprecated use Executor */
@@ -68,4 +78,5 @@ public abstract class AbstractSimpleBinaryOperation extends AbstractUntypedBinar
 	// Redundant declaration avoids @Override dilemma for 1.5/1.6
 	@Override
 	public abstract @Nullable /*@Thrown*/ Object evaluate(@Nullable Object sourceValue, @Nullable Object argumentValue);
+
 }

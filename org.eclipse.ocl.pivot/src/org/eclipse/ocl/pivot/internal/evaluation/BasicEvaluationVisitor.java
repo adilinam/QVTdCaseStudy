@@ -661,7 +661,7 @@ public class BasicEvaluationVisitor extends AbstractEvaluationVisitor
 			}
 			LibraryOperation.LibraryOperationExtension implementation = (LibraryOperation.LibraryOperationExtension) metamodelManager.getImplementation(actualOperation);
 			try {
-				Object result = implementation.dispatch(context, operationCallExp, sourceValue);
+				Object result = implementation.dispatchtoEvaluate(context, operationCallExp, sourceValue,this);
 				assert !(result instanceof NullValue);
 				return result;
 			}

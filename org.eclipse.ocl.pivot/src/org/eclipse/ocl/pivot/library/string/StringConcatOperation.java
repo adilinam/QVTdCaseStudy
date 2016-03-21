@@ -12,6 +12,10 @@ package org.eclipse.ocl.pivot.library.string;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.OperationCallExp;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.internal.evaluation.BasicEvaluationVisitor;
+import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
 
 /**
@@ -27,5 +31,14 @@ public class StringConcatOperation extends AbstractSimpleBinaryOperation
 		String rightString = asString(right);
 		@SuppressWarnings("null")@NonNull String result = leftString.concat(rightString);
 		return result;
+	}
+	
+
+	@Override
+	public Object dispatchtoEvaluate(@NonNull Executor context,
+			@NonNull OperationCallExp operationCallExp, @Nullable Object sourceValue,
+			BasicEvaluationVisitor basicEvaluationVisitor) {
+		// TODO Auto-generated method stub
+		return super.dispatchtoEvaluate(context, operationCallExp, sourceValue, basicEvaluationVisitor);
 	}
 }

@@ -31,6 +31,8 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.TemplateParameters;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.Variable;
+import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Evaluator;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -319,6 +321,11 @@ public abstract class ValueUtil
 	}
 
 	public static @NonNull String asString(@Nullable Object value) {
+		
+		if(value instanceof VariableExp)
+		{
+			return ((VariableExp) value).getName();
+		}
 		if (value instanceof String) {
 			return (String)value;
 		}
